@@ -8,271 +8,194 @@
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      background: linear-gradient(to right, #e6e6fa, #ffffff); /* Soft Lavender */
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 20px;
+      padding-top: 100px;
+      min-height: 100vh;
     }
-    #loader {
+
+    #floraButton {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #e0f7fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      bottom: 30px;
+      right: 30px;
+      background-color: #d8bfd8;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 80px;
+      height: 80px;
+      background-image: url('https://i.postimg.cc/JzLwTmh9/cute-finflora.png'); /* Cartoon FinFlora face */
+      background-size: cover;
+      cursor: pointer;
       z-index: 1000;
-      flex-direction: column;
     }
-    #loader img {
-      width: 100px;
-      animation: spin 2s linear infinite;
-    }
-    #loader span {
-      margin-top: 15px;
-      font-size: 18px;
-      color: #2E8B57;
-      font-weight: bold;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+
     #chatbox {
       background: #ffffff;
-      width: 90%; max-width: 500px;
-      margin-top: 20px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      display: flex;
+      width: 90%;
+      max-width: 400px;
+      height: 500px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      display: none;
       flex-direction: column;
-      height: 80vh;
       overflow: hidden;
-      position: relative;
+      position: fixed;
+      bottom: 130px;
+      right: 30px;
+      z-index: 1000;
+      animation: fadeIn 0.5s ease;
     }
-    #floraFace {
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      border: 3px solid #2E8B57;
-    }
+
     #messages {
       flex: 1;
-      overflow-y: auto;
       padding: 20px;
-      scrollbar-width: thin;
-      scrollbar-color: #2E8B57 #f1f1f1;
+      overflow-y: auto;
     }
+
     .user, .bot {
       margin: 10px 0;
       max-width: 70%;
       padding: 12px 18px;
       border-radius: 20px;
-      animation: fadeIn 0.5s ease;
-      position: relative;
       font-size: 15px;
       line-height: 1.4;
-      word-wrap: break-word;
     }
-    .user { background-color: #DCF8C6; align-self: flex-end; }
-    .bot { background-color: #f1f1f1; align-self: flex-start; }
+
+    .user {
+      background-color: #d8bfd8;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background-color: #f3e5f5;
+      align-self: flex-start;
+    }
+
     input[type="text"] {
-      width: 65%;
-      padding: 14px;
-      border: none;
-      border-top: 1px solid #ccc;
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ccc;
       border-radius: 10px;
       margin: 10px;
       outline: none;
-      font-size: 15px;
     }
-    button {
-      background-color: #2E8B57;
+
+    button.sendBtn {
+      background-color: #9370db;
       color: white;
       border: none;
       border-radius: 10px;
-      padding: 14px 20px;
+      padding: 10px 15px;
       margin: 10px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 15px;
     }
-    button:hover { background-color: #246b46; }
+
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(10px);}
       to {opacity: 1; transform: translateY(0);}
     }
-    footer {
-      margin: 20px 0;
+
+    #bubbleText {
+      position: fixed;
+      bottom: 120px;
+      right: 120px;
+      background-color: #f3e5f5;
+      color: #5d3fd3;
+      padding: 10px 20px;
+      border-radius: 20px;
       font-size: 14px;
-      color: #555;
-      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+      animation: fadeIn 1s ease;
     }
-    #quick-replies button {
-      margin: 5px;
-      padding: 10px 14px;
-      border: none;
-      background: #1E90FF;
+
+    #suggestButton {
+      background-color: #ba68c8;
       color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    #darkModeBtn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
       border: none;
-      font-size: 24px;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
       cursor: pointer;
+      display: none;
     }
   </style>
 </head>
 
-<body onload="initBot()">
+<body>
 
-<div id="loader">
-  <img src="https://i.postimg.cc/5yH7bbcv/finflora-final.png" alt="Loading...">
-  <span>FinFlora is blooming... 🌸</span>
-</div>
-
-<img id="floraFace" src="https://i.postimg.cc/5yH7bbcv/finflora-final.png" alt="FinFlora">
+<div id="floraButton" onclick="toggleChatbox()"></div>
+<div id="bubbleText">Talk to FinFlora your virtual assistant!</div>
 
 <div id="chatbox">
-  <button id="darkModeBtn" onclick="toggleDarkMode()">🌙</button>
   <div id="messages"></div>
-  <div id="quick-replies"></div>
-  <div style="display: flex; align-items: center; padding: 10px;">
-    <input type="text" id="userInput" placeholder="Apna sawaal likhiye...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
+  <input type="text" id="userInput" placeholder="Type your question...">
+  <button class="sendBtn" onclick="sendMessage()">Send</button>
+  <div style="text-align: center;"><button id="suggestButton" onclick="openCalculator()">Open SIP Calculator</button></div>
 </div>
-
-<!-- Contact Buttons -->
-<div style="text-align: center; margin-top: 30px;">
-  <a href="mailto:growfinwealthofficial@gmail.com" style="background-color: #2E8B57; color: white; padding: 15px 30px; text-decoration: none; font-size: 18px; border-radius: 8px; margin: 10px; display: inline-block;">📧 Email Us</a>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFeaJqA8Y6VsM6Epz5bRXvQqAZuJwyT6zTfz-hUha_FjO6-w/viewform?usp=sharing" target="_blank" style="background-color: #1E90FF; color: white; padding: 15px 30px; text-decoration: none; font-size: 18px; border-radius: 8px; margin: 10px; display: inline-block;">🗘️ Fill Contact Form</a>
-</div>
-
-<!-- Calculator Embed -->
-<div style="position: relative; padding-bottom: 100vh; height: 0; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
-  <iframe src="https://anushka-106.github.io/GrowFinWealth-Multi-calculator/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 16px;" allowfullscreen></iframe>
-</div>
-
-<footer>
-  Designed with ❤️ by Anushka Gaiki
-</footer>
 
 <script>
 const faqs = {
-  "sip kya hai": "Namaste! 🌸 SIP ka full form hai Systematic Investment Plan. Isme aap har mahine ek fixed amount invest karte hain mutual fund me, taaki aapka bada goal aaram se poora ho jaye.",
-  "sip kaise invest": "Aap ek mutual fund scheme choose karte hain, apna monthly amount decide karte hain, aur automatic deduction setup karte hain.",
-  "minimum sip": "Aap sirf ₹500 per month se apni SIP start kar sakte hain! Kuch schemes me ₹1000 minimum bhi hota hai.",
-  "sip aur lumpsum": "SIP me aap regular invest karte hain, lumpsum me ek saath. SIP market volatility ka fayda uthata hai!",
-  "mutual fund kya hai": "Mutual Fund ek pool hai jisme log milke invest karte hain, aur expert fund manager paisa manage karta hai.",
-  "mutual fund safe": "Mutual Funds SEBI ke rules ke tahat safe hote hain. Lekin har fund ka apna risk level hota hai.",
-  "risk mutual fund": "Risk depend karta hai fund ke type aur market condition pe. High return = high risk!",
-  "lumpsum kab": "Jab aapke paas bada amount ready ho aur long term ka goal ho tab lumpsum invest karna accha hota hai.",
-  "best mutual fund": "Fund ka past performance, fund manager ka experience, aur aapke goals ke hisaab se fund choose karna chahiye.",
-  "returns kitne": "Returns depend karta hai fund aur market pe. Equity funds 10-15% aur debt funds 6-8% average de sakte hain.",
-  "mutual fund tax": "Haan, Mutual Fund pe tax lagta hai. Equity me LTCG aur debt funds pe alag rule hota hai.",
-  "elss kya": "ELSS ek Equity Linked Saving Scheme hai jisme aap tax saving aur investment dono kar sakte hain.",
-  "growfin services": "GrowFin Wealth aapko mutual funds, SIP, retirement aur goal planning me madad karta hai!",
-  "growfin choose": "GrowFin me personal attention, trustworthy advice aur safe investment options milti hain!",
-  "growfin kya": "GrowFin ek trusted mutual fund aur financial planning platform hai, Anushka Gaiki ke dwara.",
-  "anushka gaiki": "Anushka Gaiki ek AMFI-certified Mutual Fund Distributor hain aur GrowFin Wealth ki Founder hain."
+  "sip": "SIP ka matlab hai Systematic Investment Plan. Yeh ek regular investment ka tareeka hai.",
+  "sip invest": "SIP invest karne ke liye GrowFin ke through asani se start kar sakte hain.",
+  "mutual fund": "Mutual Funds paise ko expert fund managers ke through invest karte hain.",
+  "lumpsum": "Lumpsum ka matlab ek saath bada amount invest karna hota hai.",
 };
 
-let goodbyes = [
-  "Byie, have a nice day! 🌺",
-  "Dhanyawad, apka din shubh ho! 🌿",
-  "Thank you! FinFlora se baat karne ke liye dhanyawad. 🌸"
-];
-
-function initBot() {
-  setTimeout(() => {
-    document.getElementById('loader').style.display = 'none';
-    botReply("🌸 Namaste! Main FinFlora hoon. Main aapki financial journey mein madad ke liye tayar hoon! Apna sawaal puchhiye!");
-  }, 2000);
+function toggleChatbox() {
+  const chatbox = document.getElementById('chatbox');
+  chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
 }
 
 function sendMessage() {
   let userText = document.getElementById("userInput").value.toLowerCase().trim();
   if (!userText) return;
-  addMessage(userText, "user");
+
+  addMessage(userText, 'user');
   document.getElementById("userInput").value = "";
 
-  addTypingAnimation();
   setTimeout(() => {
-    removeTypingAnimation();
-    let answer = "🙏 Maaf kijiye, is vishay par mere paas jaankari nahi hai. Kripya contact form ya email se humse judein.";
+    let reply = "Maaf kijiye, mujhe is prashna ka uttar nahi pata.";
+    let suggest = false;
+
     for (let key in faqs) {
       if (userText.includes(key)) {
-        answer = faqs[key] + "\n\nI hope maine aapke sawaal ka sahi samadhan diya! 🌸\n" + goodbyes[Math.floor(Math.random() * goodbyes.length)];
+        reply = faqs[key];
+        if (key.includes("sip")) suggest = true;
         break;
       }
     }
-    addMessage(answer, "bot");
-    playSound();
-  }, 1000);
+
+    addMessage(reply, 'bot');
+
+    if (suggest) {
+      document.getElementById('suggestButton').style.display = 'inline-block';
+    }
+  }, 800);
 }
 
 function addMessage(text, sender) {
-  const messageArea = document.getElementById("messages");
-  const newMsg = document.createElement("div");
+  const msgArea = document.getElementById('messages');
+  const newMsg = document.createElement('div');
   newMsg.className = sender;
   newMsg.innerText = text;
-  messageArea.appendChild(newMsg);
-  messageArea.scrollTop = messageArea.scrollHeight;
+  msgArea.appendChild(newMsg);
+  msgArea.scrollTop = msgArea.scrollHeight;
 }
 
-function addTypingAnimation() {
-  const messageArea = document.getElementById("messages");
-  const typing = document.createElement("div");
-  typing.className = "bot";
-  typing.id = "typing";
-  typing.innerHTML = '⏳ FinFlora soch rahi hai...';
-  messageArea.appendChild(typing);
-  messageArea.scrollTop = messageArea.scrollHeight;
+function openCalculator() {
+  window.open('https://anushka-106.github.io/GrowFinWealth-Multi-calculator/', '_blank');
 }
 
-function removeTypingAnimation() {
-  const typing = document.getElementById("typing");
-  if (typing) typing.remove();
-}
-
-function playSound() {
-  const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3");
-  audio.play();
-}
-
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-}
-
-document.getElementById("userInput").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    sendMessage();
-  }
-});
-
-const replies = ["SIP kya hai?", "Mutual Fund kya hai?", "GrowFin services?", "Tax Saving?", "Emergency Fund?"];
-const quickReplyArea = document.getElementById("quick-replies");
-replies.forEach(reply => {
-  let btn = document.createElement("button");
-  btn.innerText = reply;
-  btn.onclick = () => {
-    document.getElementById("userInput").value = reply;
-    sendMessage();
-  };
-  quickReplyArea.appendChild(btn);
-});
+// Auto close bubble text after few seconds
+setTimeout(() => {
+  document.getElementById('bubbleText').style.display = 'none';
+}, 5000);
 </script>
 
 </body>
